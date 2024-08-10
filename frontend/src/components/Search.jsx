@@ -37,7 +37,7 @@ function Search() {
 
           <div>
 
-            <div className="relative m-2">
+            {/* <div className="relative m-2">
               <div className="absolute text-gray-600 flex items-center pl-4 h-full cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-mail" width="18" height="18"
                   viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round"
@@ -50,7 +50,7 @@ function Search() {
               <input
                 className="w-full bg-dim-400 border-dim-400 text-gray-100 focus:bg-dim-900 focus:outline-none focus:border focus:border-blue-200 font-normal h-9 flex items-center pl-12 text-sm rounded-lg border shadow"
                 placeholder="Search Project.." />
-            </div>
+            </div> */}
 
             <div className="bg-dim-700 rounded-lg m-2">
               <h1

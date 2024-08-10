@@ -13,6 +13,7 @@ function Account() {
   const logOut = async () => {
     await signOut(auth);
     setUser(null)
+    localStorage.removeItem('user')
     navigate('/')
   }
 

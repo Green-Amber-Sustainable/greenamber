@@ -5,20 +5,30 @@ import { toast } from "react-hot-toast";
 import Toast from "./Toast"
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { signInWithGooglePopup } from "../utils/firebase"
+import { signInWithGooglePopup, db } from "../utils/firebase"
+import {
+  setDoc,
+  updateDoc,
+  doc,
+} from "firebase/firestore";
 
 import { IoInformationCircleOutline, IoBookmarkOutline, IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { TbPrompt, TbBulb } from "react-icons/tb";
 
 function Sidebar({ isOpen }) {
   const location = useLocation();
-  const [profile, setProfile] = useState(null)
   const [user, setUser] = useState(null)
 
   const logGoogleUser = async () => {
     const response = await signInWithGooglePopup();
-    // console.log(response);
     const user = response.user;
+
+    if (user.metadata.createdAt === user.metadata.lastLoginAt) {
+      setDoc(doc(db, "users", response.user.uid), user.providerData[0]);
+    } else {
+      updateDoc(doc(db, "users", response.user.uid), { lastLogin: new Date().getTime(), ...user.providerData[0] });
+    }
+
     setUser(user.providerData[0]);
     localStorage.setItem('user', JSON.stringify(user.providerData[0]))
   }
