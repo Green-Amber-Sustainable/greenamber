@@ -10,7 +10,7 @@ import { signInWithGooglePopup } from "../utils/firebase"
 import { IoInformationCircleOutline, IoBookmarkOutline, IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { TbPrompt, TbBulb } from "react-icons/tb";
 
-function Sidebar({ session, setSession }) {
+function Sidebar({ isOpen }) {
   const location = useLocation();
   const [profile, setProfile] = useState(null)
   const [user, setUser] = useState(null)
@@ -34,30 +34,30 @@ function Sidebar({ session, setSession }) {
 
   return (
     <>
-      <div className="hidden md:block w-68 xs:w-88 xl:w-275 h-screen">
+      <div className={`md:block w-68 xs:w-88 xl:w-275 h-full duration-500 ${isOpen && 'hidden -translate-x-full'}`}>
         <div className="flex flex-col justify-between h-screen xl:pr-3 fixed overflow-y-auto w-68 xs:w-88 xl:w-275">
 
           <div>
-            <Link className="flex my-1 pl-2 justify-center xl:justify-start border-b border-dim-200" to="/">
+            <Link className="flex my-1 pl-2 justify-center xl:justify-start md:border-b border-dim-200" to="/">
               <h1 className="hidden md:block font-semibold py-2 text-xl text-green-500">Green <span className="font-bold text-amber-400">Amber</span>
                 <small className="ml-2 font-normal text-end text-blue-400 italic">:community</small></h1>
             </Link>
 
             <nav className="mt-5">
               <Link to="/"
-                className={`flex items-center justify-center xl:justify-start ${location.pathname === '/' ? 'text-amber-400' : 'text-white hover:text-amber-400'} transition duration-350 ease-in-out p-2 mb-2 hover:bg-slate-800 rounded-xl`}>
+                className={`flex items-center justify-center xl:justify-start ${location.pathname === '/' ? 'text-amber-400' : 'text-white hover:text-amber-400'} transition duration-350 ease-in-out p-2 mb-2 md:hover:bg-slate-800 rounded-xl`}>
                 <TbPrompt className="h-6 w-6 text-white" />
-                <span className="hidden xl:block ml-4 font-bold text-md">Home</span>
+                <span className="hidden xl:block ml-4 font-bold text-md">Welcome</span>
               </Link>
 
               <Link to="/about"
-                className={`flex items-center justify-center xl:justify-start ${location.pathname === '/about' ? 'text-amber-400' : 'text-white hover:text-amber-400'} transition duration-350 ease-in-out p-2 mb-2 hover:bg-slate-800 rounded-xl`}>
+                className={`flex items-center justify-center xl:justify-start ${location.pathname === '/about' ? 'text-amber-400' : 'text-white hover:text-amber-400'} transition duration-350 ease-in-out p-2 mb-2 md:hover:bg-slate-800 rounded-xl`}>
                 <IoInformationCircleOutline className="h-6 w-6 text-white" />
                 <span className="hidden xl:block ml-4 font-bold text-md">About Us</span>
               </Link>
 
               <Link to="/explore"
-                className={`flex items-center justify-center xl:justify-start ${location.pathname === '/explore' ? 'text-amber-400' : 'text-white hover:text-amber-400'} transition duration-350 ease-in-out p-2 mb-2 hover:bg-slate-800 rounded-xl`}>
+                className={`flex items-center justify-center xl:justify-start ${location.pathname === '/explore' ? 'text-amber-400' : 'text-white hover:text-amber-400'} transition duration-350 ease-in-out p-2 mb-2 md:hover:bg-slate-800 rounded-xl`}>
                 <TbBulb className="h-6 w-6 text-white" />
                 <span className="hidden xl:block ml-4 font-bold text-md">Projects</span>
               </Link>
@@ -76,14 +76,8 @@ function Sidebar({ session, setSession }) {
                 <span className="hidden xl:block font-bold text-md">Submit Project</span>
               </Link>}
 
-              {user && <Link to="/bookmarks"
-                className={`flex items-center justify-center xl:justify-start ${location.pathname === '/bookmarks' ? 'text-amber-400' : 'text-white hover:text-amber-400'} transition duration-350 ease-in-out p-2 mb-2 hover:bg-slate-800 rounded-xl`}>
-                <IoBookmarkOutline className="h-6 w-6 text-white" />
-                <span className="hidden xl:block ml-4 font-bold text-md">Bookmarks</span>
-              </Link>}
-
               {user && <Link to="/talk-to-doc"
-                className={`flex items-center justify-center xl:justify-start ${location.pathname === '/talk-to-doc' ? 'text-amber-400' : 'text-white hover:text-amber-400'} transition duration-350 ease-in-out p-2 mb-2 hover:bg-slate-800 rounded-xl`}>
+                className={`flex items-center justify-center xl:justify-start ${location.pathname === '/talk-to-doc' ? 'text-amber-400' : 'text-white hover:text-amber-400'} transition duration-350 ease-in-out p-2 mb-2 md:hover:bg-slate-800 rounded-xl`}>
                 <IoChatbubbleEllipsesOutline className="h-6 w-6 text-white" />
                 {/* <span class="relative flex h-3 w-3 mt-0">
                   <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
@@ -92,7 +86,7 @@ function Sidebar({ session, setSession }) {
                 <span className="hidden xl:block ml-4 font-bold text-md">Talk to Doc</span>
               </Link>}
 
-              {user && <Link to="/account" className={`flex items-center justify-center xl:justify-start mb-8 transition duration-350 ease-in-out p-2 hover:bg-slate-800 rounded-xl`}>
+              {user && <Link to="/account" className={`flex items-center justify-center xl:justify-start mb-8 transition duration-350 ease-in-out p-2 md:hover:bg-slate-800 rounded-xl`}>
                 <img className="w-6 h-6 rounded-full"
                   src={user.photoURL} alt="pict" />
                 <div className="hidden xl:block flex flex-col ml-4">
@@ -103,7 +97,7 @@ function Sidebar({ session, setSession }) {
                 </div>
               </Link>}
 
-              {!user && <div className={`flex items-center justify-center xl:justify-start mb-8 cursor-pointer transition duration-350 ease-in-out p-2 hover:bg-slate-800 rounded-xl`} onClick={logGoogleUser}>
+              {!user && <div className={`flex items-center justify-center xl:justify-start mb-8 cursor-pointer transition duration-350 ease-in-out p-2 md:hover:bg-slate-800 rounded-xl`} onClick={logGoogleUser}>
                 <img className="w-6 h-6 rounded-full"
                   src="./doc.png" alt="google" />
                 <div className="hidden xl:block flex flex-col ml-4">

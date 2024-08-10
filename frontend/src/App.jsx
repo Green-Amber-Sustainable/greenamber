@@ -1,13 +1,10 @@
-import { BrowserRouter as Router, Routes, Route, Link, NavLink } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
 import Layout from './components/Layout'
 import Home from './pages/Home'
 import Account from './pages/Account'
 import Explore from './pages/Explore'
-import Notifications from './pages/Notifications'
-import Bookmarks from './pages/Bookmarks'
-import Profile from './pages/Profile'
-import Settings from './pages/Settings'
+import Inventors from './pages/Inventors'
 import Project from './pages/Project'
 import Brainstorm from './pages/Brainstorm'
 import Terms from './pages/statics/Terms'
@@ -23,10 +20,7 @@ function App() {
           <Route path="/" element={<Layout />} exact>
             <Route path="" element={<Home />} />
             <Route path="explore" element={<Explore />} />
-            <Route path="notifications" element={<Notifications />} />
-            <Route path="bookmarks" element={<Bookmarks />} />
-            <Route path=":username" element={<Profile />} />
-            <Route path="settings" element={<Settings />} />
+            <Route path="inventors" element={<Inventors />} />
             <Route path="project" element={<Project />} />
             <Route path="account" element={<Account />} />
             <Route path="talk-to-doc" element={<Brainstorm />} />

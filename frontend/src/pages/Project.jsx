@@ -6,11 +6,10 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { db } from "../utils/firebase";
 import {
   collection,
-  getDocs,
   addDoc,
   updateDoc,
-  query, where,
   doc,
+  runTransaction
 } from "firebase/firestore";
 
 const baseUrl = import.meta.env.VITE_API_URL
@@ -138,18 +137,32 @@ function Project() {
   }
 
   const updateInventor = async () => {
-    let data, id
-    const q = query(usersRef, where("inventor", "==", true));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      id = doc.id;
-      data = doc.data();
-    });
+    const docRef = doc(db, "users", user.uid);
 
-    if (!data) {
-      await updateDoc(doc(db, "users", user.uid), {
+    try {
+      await runTransaction(db, async (transaction) => {
+        const docSnapshot = await transaction.get(docRef);
+
+        if (!docSnapshot.exists()) {
+          throw "Document does not exist!";
+        }
+
+        let newValue;
+        if (docSnapshot.data().projects) {
+          newValue = docSnapshot.data().projects + 1;
+        } else {
+          newValue = 1;
+        }
+
+        // Perform some logic and update the document
+        transaction.update(docRef, { projects: newValue });
+      });
+
+      updateDoc(doc(db, "users", user.uid), {
         inventor: true
       });
+    } catch (e) {
+      console.log("Transaction failed: ", e);
     }
   };
 
@@ -165,7 +178,7 @@ function Project() {
     <>
       <div className="w-full md:w-600">
 
-        <Header title="Show your project to the world" />
+        <Header title="Show Your Project to the World" />
 
         <div
           className="h-[92vh] overflow-y-auto border-b border-dim-200 transition duration-350 ease-in-out pb-4 border-l border-r">

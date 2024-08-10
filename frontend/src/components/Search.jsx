@@ -79,29 +79,29 @@ function Search() {
 
               <div
                 className="text-amber-400 text-sm font-normal p-3 hover:bg-dim-300 cursor-pointer transition duration-350 ease-in-out">
-                Show more
+                <Link to="/inventors">Show more</Link>
               </div>
             </div>
 
             <div className="bg-dim-700 rounded-lg m-2 overflow-y-auto">
               <h1
                 className="text-white text-md font-bold p-3 border-b border-dim-200">
-                Trending Projects
+                Latest Projects
               </h1>
 
-              {projects && projects.sort((a, b) => b.bookmarks - a.bookmarks).slice(0, 5).map((row, id) => (
+              {projects && projects.sort((a, b) => b.submitAt - a.submitAt).slice(0, 5).map((row, id) => (
                 <div key={id}
                   className="text-amber-400 text-sm font-normal p-3 border-b border-dim-200 hover:bg-dim-300 transition duration-350 ease-in-out">
                   <a className="font-bold text-md text-white hover:text-amber-400" target="_blank" href={row.link}>
-                    {row.title}
+                    {row.title.length >= 42 ? `${row.title.slice(0, 42)}..` : row.title}
                   </a>
-                  <p className="text-xs text-gray-400">29.7K Bookmarks</p>
+                  <p className="text-xs text-gray-400">by {row.inventor.name}</p>
                 </div>)
               )}
 
               <div
                 className="text-amber-400 text-sm font-normal p-3 hover:bg-dim-300 cursor-pointer transition duration-350 ease-in-out">
-                Show more
+                <Link to="/explore">Show more</Link>
               </div>
             </div>
 
@@ -124,7 +124,7 @@ function Search() {
                 <a className="hover:underline" href="https://t.me/greenamber_community" target="_blank">Community</a>
               </li>
               <li className="inline-block mx-2">
-                <a className="hover:underline" href="#">Career</a>
+                <a className="hover:underline" href="https://github.com/Green-Amber-Sustainable/greenamber">GitHub</a>
               </li>
               <br />
               <li className="inline-block my-2 mx-2">© {new Date().getFullYear()} Green Amber Community.</li>

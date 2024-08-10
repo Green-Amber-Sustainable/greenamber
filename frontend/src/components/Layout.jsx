@@ -5,6 +5,7 @@ import Search from "./Search"
 
 function Layout() {
   const [session, setSession] = useState(null)
+  const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
 
@@ -12,17 +13,17 @@ function Layout() {
 
   return (
     <>
-      <div className="mx-auto">
+      <div className="md:container mx-auto">
         {/* <div className="xl:hidden flex flex-col justify-between mx-auto h-screen items-center p-4">
           <div className="text-center mt-[25%] p-4 bg-slate-600 rounded-lg">
             <h1 className="text-xl mb-3">Browser window too narrow</h1>
             <p>Our platform is currently optimized for a full screen desktop experience. Expand you screen or switch to a computer to get started.</p>
           </div>
         </div> */}
-        <div className="xl:flex flex-row justify-center">
-          <Sidebar session={session} setSession={setSession} />
+        <div className="flex flex-row justify-center z-50">
+          <Sidebar session={session} setSession={setSession} isOpen={isOpen} />
 
-          <Outlet />
+          <Outlet context={[isOpen, setIsOpen]} />
 
           <Search />
         </div>
